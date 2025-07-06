@@ -1,104 +1,104 @@
-# Chat Assistant
+# 🧠 LightGPT - Groq LLM Chat Assistant with Custom Tooling
 
-A powerful AI assistant application built using Streamlit and the Model Context Protocol (MCP), offering multiple AI tools including general QA, deep research, image generation, and PDF document analysis.
+**LightGPT** is an intelligent, extensible chat assistant powered by Groq's LLM and custom tools, built with Streamlit and Starlette. It enables contextual, task-aware responses across multiple domains, including code generation, research, PDF Q&A, image creation, and web search — all through an interactive multi-session chat UI.
 
-## Project Overview
+## ✨ Features
 
-Chat Assistant is a versatile conversational AI interface that integrates several advanced AI capabilities:
+- ⚙️ **Integrated Groq's LLM** with tool invocation via a custom MCP (Modular Command Processor) server using Server-Sent Events (SSE).
+- 🧠 **Tool-Enhanced Intelligence**:
+  - `generate_code`: Write code in multiple languages with explanations.
+  - `deep_research`: Firecrawl-powered multi-source research.
+  - `pdf_qa`: Ask questions about uploaded PDFs using LlamaIndex.
+  - `tavily_search`: Summarized real-time web results.
+  - `generate_image`: AI image generation via Pollinations.
+- 💬 **Multi-session Chat Memory** with PostgreSQL-backed persistence and LangChain memory support.
+- 📄 **Export Conversations** to PDF format.
+- 🖼️ **File Uploads & Image Previews** integrated into the chat.
+- 🧱 **Modern UI/UX** with dynamic chat, customizable input controls, and session management.
+- 🔐 **Environment-based Configuration** for easy deployment and API key handling.
 
-- **General Chat**: Engage in conversational interactions with an AI assistant
-- **Deep Research**: Perform comprehensive research on any topic with multiple sources
-- **Image Generation**: Create images from text descriptions
-- **PDF QA**: Ask questions about the content of uploaded PDF documents
-
-The application uses Streamlit for the frontend UI, with a Python backend that communicates with various AI services via the Model Context Protocol (MCP).
-
-## Project Structure
+## 📁 Project Structure
 
 ```
-Dev-MCP/
-│
-├── src/                    # Main application source code
-│   ├── database/           # Database handling and persistence
-│   ├── mcp/                # Model Context Protocol client implementation
-│   ├── styles/             # CSS and styling files
-│   ├── utils/              # Utility functions
-│   └── main.py             # Main Streamlit application
-│
-├── server/                 # MCP Server implementation
-│   └── mcp_server_sse.py   # Server-Sent Events based MCP server
-│
-└── requirements.txt        # Project dependencies
+├── main.py                # Streamlit app entrypoint
+├── mcp_server_sse.py      # Custom MCP tool server (Starlette + SSE)
+├── uploaded_pdfs/         # Folder for PDF uploads
+├── image/                 # Folder for generated images
+├── database/              # Folder for PDF indexes (LlamaIndex)
+├── .env                   # Environment variables
 ```
 
-## Installation
+## 🚀 Getting Started
 
-1. Clone the repository 
+### Prerequisites
+
+- Python 3.9+
+- PostgreSQL
+- API Keys:
+  - `GROQ_API_KEY`
+  - `TAVILY_API_KEY`
+  - `FIRECRAWL_API_KEY`
+
+### Installation
 
 ```bash
-git clone https://gitlab.wappnet.us/dhruv.wappnet/general-chat-agent.git
-cd Dev-MCP
-```
-
-2. Install the required dependencies:
-
-```bash
+git clone https://github.com/yourusername/lightgpt.git
+cd lightgpt
 pip install -r requirements.txt
 ```
 
-## Environment Variables
+### Environment Setup
 
-Create a `.env` file in the project root directory with the following environment variables:
+Create a `.env` file:
 
-```
-# Required API keys
+```env
 GROQ_API_KEY=your_groq_api_key
 TAVILY_API_KEY=your_tavily_api_key
 FIRECRAWL_API_KEY=your_firecrawl_api_key
-
-# Server configuration
 SERVER_URL=http://localhost:8000/sse
-MODEL_NAME=llama3-70b-8192
-
-# PostgreSQL configuration
-DB_HOST=your_hostname
-DB_NAME=your_database_name
-DB_USER=your_username
-DB_PASSWORD=your_password
+DB_HOST=localhost
+DB_NAME=chatbot_db
+DB_USER=postgres
+DB_PASSWORD=your_db_password
 ```
 
-### Required API Keys:
-
-- **GROQ_API_KEY**: API key for the Groq language model API (https://groq.com)
-- **TAVILY_API_KEY**: API key for the Tavily search API (https://tavily.com)
-- **FIRECRAWL_API_KEY**: API key for the Firecrawl research API
-
-## Running the Application
-
-### Step 1: Start the MCP Server
-
-Open a terminal window and run:
+### Run the MCP Server
 
 ```bash
-cd Dev-MCP
-python server/mcp_server_sse.py
+python mcp_server_sse.py
 ```
 
-This will start the MCP server on `localhost:8000`.
-
-### Step 2: Start the Streamlit Application
-
-Open a new terminal window and run:
+### Run the Streamlit Frontend
 
 ```bash
-cd Dev-MCP
-streamlit run src/main.py
+streamlit run main.py
 ```
 
-## Features
+## 🧠 Tools Overview
 
-### Tools
-- **Default**: Standard question-answering using the Groq LLM
-- **Deep Research**: In-depth research on topics with multiple source references
-- **Image Generation**: Create images from text descriptions
-- **PDF QA**: Upload PDFs and ask questions about their content
+Each tool is registered with the MCP server and auto-discovered in the frontend:
+- **`generate_code`**: Converts natural language into runnable code with explanations.
+- **`deep_research`**: Crawls and summarizes web sources deeply.
+- **`pdf_qa`**: Answers based on PDF content using vector index.
+- **`generate_image`**: Creates images from prompts.
+- **`general_qa`, `chat_with_assistant`, `math_solver`, `generate_prompt`**, etc.
+
+## 🧪 Example Use Cases
+
+- Ask: *"Create a Python script to scrape weather data."*
+- Upload a PDF and ask: *"Summarize chapter 3."*
+- Prompt: *"Generate an image of a futuristic city at night."*
+
+## 📦 Dependencies
+
+- Streamlit
+- LangChain
+- Groq SDK
+- LlamaIndex
+- Firecrawl
+- Tavily
+- psycopg2
+- Starlette
+- Uvicorn
+- dotenv
+- ReportLab
