@@ -1,9 +1,12 @@
 import asyncio
 from httpx_oauth.clients.google import GoogleOAuth2
-
-CLIENT_ID = "40788949411-sd1ebbdqnrb8phbhke29pupbqq6c1lp7.apps.googleusercontent.com"
-CLIENT_SECRET = "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"
-REDIRECT_URI = "http://localhost:8501"
+from dotenv import load_dotenv
+import os
+load_dotenv()
+# Load environment variables
+CLIENT_ID = os.getenv("CLIENT_ID")
+CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+REDIRECT_URI = os.getenv("REDIRECT_URI")
 
 google_client = GoogleOAuth2(
     client_id=CLIENT_ID,
